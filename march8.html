@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="container bg-light pad50">
+        <div class="row" id="rowId">
+    
+  
+</div>
+</div>
+
+    <script>
+        var countriesData= fetch("https://restcountries.eu/rest/v2/all")
+
+        countriesData.then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            for (let i = 0; i <250; i++) {
+            
+
+          var rowId = document.createElement("div")
+          var rowId = document.getElementById("rowId")
+            
+            var column =  document.createElement("div")
+            column.setAttribute("class","card")
+            column.setAttribute("style",'width:18rem')
+
+
+            var card = document.createElement('div')
+            card.setAttribute("class","col4")
+
+
+            var image = document.createElement("img")
+            image.setAttribute("class","card-img-top")
+            image.src = data[i].flag
+
+            var cardbody = document.createElement("div")
+            cardbody.setAttribute("class","card-body")
+
+       
+            var countryName = document.createElement("p")
+            countryName.setAttribute("class","card-text")
+            countryName.innerHTML =  data[i].name
+
+            var countryRegion = document.createElement("p")
+            countryRegion.setAttribute("class","card-text")
+            countryRegion.innerHTML = data[i].region
+
+            var countryPopulation = document.createElement("p")
+            countryPopulation.setAttribute("class","card-text")
+            countryPopulation.innerHTML = data[i].population
+
+            var weatherbtn = document.createElement("button")
+            weatherbtn.setAttribute("class","btn btn-primary")
+            weatherbtn.innerHTML = "WEATHER"
+            weatherbtn.addEventListener("click", function () {
+                
+                var weather = fetch("https://api.openweathermap.org/data/2.5/weather?q=" + data[i].name + "&appid=db16bf7b666d90a57f278e7d6c6e99dc")
+                
+                
+                weather.then((response) =>{
+               return response.json()
+           })
+           .then((response) =>{
+               console.log(response)
+       alert("Latitude is: " + response.coord.lat + " \n" + "Longitude is: " + response.coord.lon + "\n " + "Temperature is: " + response.main.temp);
+           })
+           
+            })
+           
+            
+          
+           
+           
+            cardbody.append(countryName,countryRegion,countryPopulation,weatherbtn)
+            card.append(image,cardbody)
+            column.append(card)
+            rowId.append(column)
+            
+            
+
+            
+}
+
+            
+            
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        
+       
+           
+        
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>
